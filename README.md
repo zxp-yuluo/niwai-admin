@@ -1,3 +1,3 @@
-# 腻歪音乐(react)
+# niwai-music-admin
 
 ## Antd 4.x
