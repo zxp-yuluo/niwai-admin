@@ -1,7 +1,10 @@
+import {Button} from 'antd'
+import './App.less';
+
 function App() {
   return (
     <div className="App">
-      腻歪音乐
+      <Button>腻歪音乐</Button>
     </div>
   );
 }
