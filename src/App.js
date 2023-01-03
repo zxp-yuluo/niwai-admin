@@ -1,12 +1,14 @@
-import {Button} from 'antd'
+import { useRoutes } from 'react-router-dom';
+import routes from './router/index';
 import './App.less';
 
 function App() {
+  const element = useRoutes(routes)
   return (
-    <div className="App">
-      <Button>腻歪音乐</Button>
+    <div className="app">
+      {element}
     </div>
   );
-}
+};
 
 export default App;
