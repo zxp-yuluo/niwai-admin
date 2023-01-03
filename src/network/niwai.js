@@ -1,6 +1,8 @@
 import axios from "axios";
 import { message } from "antd";
+import Nprogress from 'nprogress'
 import { BASE_URL } from "../config";
+import 'nprogress/nprogress.css'
 
 const instance = axios.create({
   baseURL: BASE_URL
@@ -9,6 +11,7 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   config => {
+    Nprogress.start()
     return config;
   }, error => {
     return Promise.reject(error);
@@ -16,9 +19,10 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   response => {
+    Nprogress.done()
     return response.data;
   }, error => {
-    console.log(error.message);
+    Nprogress.done()
     message.error(error.message + '，请联系管理员')
     return new Promise(() => { })
   })

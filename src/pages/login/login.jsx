@@ -1,19 +1,26 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
-import {login} from '../../network'
-import nw from './login.module.css'
-import { useNavigate } from 'react-router-dom';
-const { Item } = Form
+import { setUserInfo } from '../../store/slices/userSlice';
+import {login} from '../../network';
+import nw from './login.module.css';
 
+const { Item } = Form;
 
 const Login = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onFinish = async values => {
     const result = await login(values)
     if(result.status === 1) {
       message.success(result.message)
-      navigate('/admin',{replace: true})
+      dispatch(setUserInfo(result))
+      navigate('/admin',{
+        replace: true
+      })
+      // navigate('/admin')
     }else {
       message.warning(result.message)
     }
