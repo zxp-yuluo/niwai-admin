@@ -1,15 +1,22 @@
 import React from 'react';
-import nw from './login.module.css'
-
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
-const {Item} = Form
+import { Button, Form, Input, message } from 'antd';
+import {login} from '../../network'
+import nw from './login.module.css'
+import { useNavigate } from 'react-router-dom';
+const { Item } = Form
 
 
 const Login = () => {
-  
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const navigate = useNavigate()
+  const onFinish = async values => {
+    const result = await login(values)
+    if(result.status === 1) {
+      message.success(result.message)
+      navigate('/admin',{replace: true})
+    }else {
+      message.warning(result.message)
+    }
   };
   return (
     <div className={nw.login}>
@@ -55,6 +62,10 @@ const Login = () => {
               {
                 max: 20,
                 message: '密码最大20位！'
+              },
+              { 
+                pattern: /^\w+$/,
+                message: '由字母、数字、下划线组成！'
               }
             ]}
           >

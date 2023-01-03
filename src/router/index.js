@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import Login from "../pages/login/login";
+import Admin from "../pages/admin/admin";
 
 const routes = [
   {
@@ -9,6 +10,10 @@ const routes = [
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/admin',
+    element: <Admin />
   },
 ];
 
