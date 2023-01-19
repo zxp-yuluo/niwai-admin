@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message } from 'antd';
 import { setUserInfo } from '../../store/slices/userSlice';
@@ -12,6 +12,14 @@ const { Item } = Form;
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const {isLogin} = useSelector(state => state.userInfo)
+  useEffect(() => {
+    if(isLogin) {
+      navigate('/admin', {
+         replace: true
+      })
+    }
+  })
   const onFinish = async values => {
     const result = await login(values)
     if(result.status === 1) {

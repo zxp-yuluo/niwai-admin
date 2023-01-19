@@ -1,0 +1,10 @@
+.layout {
+  height: 100%;
+  }
+.sider {
+  background-color: #f0f2f5 !important;
+}
+.content {
+  margin: 20px;
+  background: #fff;
+}

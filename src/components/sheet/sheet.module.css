@@ -1,0 +1,54 @@
+.card {
+  height: 100%;
+  overflow-y: scroll;
+}
+.textarea {
+  resize: none;
+}
+.tag {
+  position: relative;
+}
+.add_tag {
+  position: absolute;
+  padding: 3px 20px;
+  width: 283px;
+  height: 200px;
+  font-size: 12px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 1px 1px 1px 1px rgba(141, 134, 134, 0.1),-1px -1px 1px 1px rgba(141, 134, 134, 0.1);
+  z-index: 1;
+  overflow-y: scroll;
+}
+.tag_title {
+  margin: 0;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  background: #fff;
+  z-index: 9;
+}
+.tag_tips {
+  color: #aaa;
+}
+.list {
+  display: flex;
+  margin-bottom: 5px;
+}
+.left {
+  width: 20%;
+}
+.right {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+.item {
+  width: 25%;
+  text-align: center;
+  cursor: pointer;
+}
+.item:hover {
+  color: #ed9063;
+}

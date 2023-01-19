@@ -1,8 +1,10 @@
 import axios from "axios";
 import { message } from "antd";
-import Nprogress from 'nprogress'
+import Nprogress from 'nprogress';
+import store from '../store';
+import { delUserInfo } from "../store/slices/userSlice";
 import { BASE_URL } from "../config";
-import 'nprogress/nprogress.css'
+import 'nprogress/nprogress.css';
 
 const instance = axios.create({
   baseURL: BASE_URL
@@ -12,6 +14,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     Nprogress.start()
+    const {token} = store.getState().userInfo || ''
+    if(token) {
+      config.headers.Authorization = 'niwai_' + token
+    }
     return config;
   }, error => {
     return Promise.reject(error);
@@ -23,7 +29,14 @@ instance.interceptors.response.use(
     return response.data;
   }, error => {
     Nprogress.done()
-    message.error(error.message + '，请联系管理员')
+    const statusCode = error.response.status
+    // token过期
+    if(statusCode === 401) {
+      message.error('身份验证失败，请重新登录！')
+      store.dispatch(delUserInfo());
+    }else {
+      message.error(error.message + '，请联系管理员')
+    }
     return new Promise(() => { })
   })
 
