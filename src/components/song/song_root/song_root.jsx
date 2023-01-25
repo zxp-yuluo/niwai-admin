@@ -69,6 +69,11 @@ const SongRoot = () => {
       key: 'album_name',
     },
     {
+      title: '创建者',
+      dataIndex: 'create_author',
+      key: 'create_author',
+    },
+    {
       title: '操作',
       dataIndex: 'id',
       key: 'id',
@@ -88,9 +93,11 @@ const SongRoot = () => {
   }
   // 点击搜索按钮
   const keywordSearchSong = async () => {
-    if(!keyword) {
-      message.warning('关键字不能为空！')
-      return
+    if(keywordType !== 'all') {
+      if(!keyword) {
+        message.warning('关键字不能为空！')
+        return
+      }
     }
     getSongList({ keywordType, keyword, create_author: user.username, pageNum: 1, pageSize: songPageSize },
       setSongList,
@@ -104,7 +111,6 @@ const SongRoot = () => {
   }
   // 点击页码
   const paginationChange = async value => {
-    console.log(value);
     getSongList({ keywordType, keyword, create_author: user.username, pageNum: value, pageSize: songPageSize },
       setSongList,
       setSongPages,
@@ -146,9 +152,14 @@ const SongRoot = () => {
             setSongPages,
             setSongTotal
           )
+          if(picture) {
+            await delPictureByName(picture)
+          }
+          if(lyrics) {
+            await delPictureByName(picture)
+            await delLyricsByName(lyrics)
+          }
           await delAudioByName(audio)
-          await delPictureByName(picture)
-          await delLyricsByName(lyrics)
         } else {
           message.warning(result.message)
         }

@@ -153,7 +153,9 @@ const Sheet = () => {
   // 获取用户歌单
 
   useEffect(() => {
-    getSheetList(user.username, setSongSheet)
+    if(user) {
+      getSheetList(user.username, setSongSheet)
+    }
   }, [user])
 
   // 获取图片url地址
@@ -210,12 +212,14 @@ const Sheet = () => {
   // 删除歌单
   const delSheetClick = async sheet => {
     const { id,cover} = sheet
-    const name = 'niwaiyinyue' + cover.split('niwaiyinyue').reverse()[0]
     const result = await delUserSheet(id)
     if (result.status === 1) {
       message.success(result.message)
       getSheetList(user.username, setSongSheet)
-      await delPictureByName(name)
+      if(cover) {
+        const name = 'niwaiyinyue' + cover.split('niwaiyinyue').reverse()[0]
+        await delPictureByName(name)
+      }
     } else {
       message.warning(result.message)
       getSheetList(user.username, setSongSheet)

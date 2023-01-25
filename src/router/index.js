@@ -3,14 +3,13 @@ import Login from "../pages/login/login";
 import Admin from "../pages/admin/admin";
 import Home from "../components/home/Home";
 import Sheet from '../components/sheet/Sheet';
-import Female from '../components/female/Female';
-import Male from '../components/male/Male';
-import Combination from '../components/combination/Combination';
 import Manage from '../components/manage/Manage';
 import Role from "../components/role/role";
 import Song from '../components/song/Song';
 import AddSong from "../components/song/add_song/add_song";
 import SongRoot from "../components/song/song_root/song_root";
+import Singer from "../components/singer/singer";
+import Album from "../components/album/album";
 
 
 const GetRoutes = () => {
@@ -62,16 +61,12 @@ const GetRoutes = () => {
           element: <Manage />
         },
         {
-          path: 'singer/male',
-          element: <Male />
+          path: 'singer',
+          element: <Singer />
         },
         {
-          path: 'singer/female',
-          element: <Female />
-        },
-        {
-          path: 'singer/combination',
-          element: <Combination />
+          path: 'album',
+          element: <Album />
         },
         {
           path: 'role',

@@ -21,7 +21,7 @@ const AddSong = () => {
   const { username } = useSelector(state => state.userInfo.user)
   const [previousPage, setPreviousPage] = useState()
   // 修改歌曲的信息
-  let {songInfo} = location.state
+  let { songInfo } = location.state
   // 上传图片信息
   const [image, setImage] = useState(null)
   // 上传音频信息
@@ -29,7 +29,7 @@ const AddSong = () => {
   // 上传歌词信息
   const [lyrics, setLyrics] = useState(null)
 
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(null);
 
   // 修改时初始图片信息
   const [originalImage, setOriginalImage] = useState(null)
@@ -75,7 +75,7 @@ const AddSong = () => {
       // 如果没提交删除上传的图片音频歌词
       if (id) {
         // 修改
-        if (originalImageRef.current && imageRef.current&& originalImageRef.current.name !== imageRef.current.name) {
+        if (originalImageRef.current && imageRef.current && originalImageRef.current.name !== imageRef.current.name) {
           await delPictureByName(imageRef.current.name)
         }
         if (originalLyricsRef.current && lyricsRef.current && originalLyricsRef.current.name !== lyricsRef.current.name) {
@@ -105,18 +105,20 @@ const AddSong = () => {
   }
   // 提交表单
   const onFinish = async value => {
+    let tempLyrics = lyrics ? lyrics.url : ''
+    let tempImage = image ? image.url : ''
     if (id) {
       // 有id修改歌曲
-      const result = await updateSongById(id, { ...value, url: url.url, lyrics: lyrics.url, image: image.url })
+      const result = await updateSongById(id, { ...value, url: url.url, lyrics: tempLyrics, image: tempImage })
       if (result.status === 1) {
         setFlag(true)
-        if(originalImage.name !== image.name) {
+        if (originalImage.name !== image.name) {
           await delPictureByName(originalImage.name)
         }
-        if(originalLyrics.name !== lyrics.name) {
+        if (originalLyrics.name !== lyrics.name) {
           await delLyricsByName(originalLyrics.name)
         }
-        if(originalUrl.name !== url.name) {
+        if (originalUrl.name !== url.name) {
           await delAudioByName(originalUrl.name)
         }
         message.success(result.message)
@@ -133,7 +135,7 @@ const AddSong = () => {
         message.warning('请上传音频！')
         return
       }
-      const params = { ...value, url: url.url, lyrics: lyrics.url, image: image.url, create_author: username }
+      const params = { ...value, url: url.url, lyrics: tempLyrics, image: tempImage, create_author: username }
       const result = await addUserSong(params)
       if (result.status === 1) {
         message.success(result.message)

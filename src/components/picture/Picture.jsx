@@ -57,12 +57,10 @@ const Picture = (props) => {
           name: updateInfo.pictureName,
           url: updateInfo.cover
         }
-        console.log('原始歌单封面信息', originalInfo);
         // const currentInfo = {
         //   name: updateInfo.pictureName,
         //   url: updateInfo.cover
         // }
-        console.log('上传前显示的图片信息:', currentInfo);
         if(originalInfo.name !== currentInfo.name) {
           //如果原始的信息和上传前显示的信息相同，说明是第一次上传，不相同把上传前显示的图片删除
           await delPictureByName(currentInfo.name)
@@ -72,7 +70,6 @@ const Picture = (props) => {
           name: file.response.data.name,
           url: file.response.data.url
         }
-        console.log('修改的图片信息',updataInfo);
         props.getUpdataPictureInfo({ currentInfo, updataInfo,originalInfo })
         setCurrentInfo(updataInfo)
       }

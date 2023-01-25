@@ -27,21 +27,12 @@ const menuList = [
   {
     label: '歌手',
     key: 'singer',
-    icon: '<UserOutlined />',
-    children: [
-      {
-        label: '男歌手',
-        key: 'singer/male',
-      },
-      {
-        label: '女歌手',
-        key: 'singer/female',
-      },
-      {
-        label: '组合',
-        key: 'singer/combination',
-      }
-    ]
+    icon: '<UserOutlined />'
+  },
+  {
+    label: '专辑',
+    key: 'album',
+    icon: '<WalletOutlined />'
   },
   {
     label: '用户管理',
@@ -55,7 +46,6 @@ const menuList = [
   }
 ]
 function getTitle(params) {
-  console.log('我没频繁调用');
   let title 
   menuList.forEach(item => {
     if(item.children instanceof Array) {
