@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 import { Button, Card, message, Space, Table, Modal, Form, Input, Select } from 'antd';
-import nw from './manage.module.css';
-import { getUserList, addUser, updateUserInfo, deleteUserInfo, getUserInfo, getRoleList } from '../../network';
+// import nw from './manage.module.css';
+import { getUserList, addUser, updateUserInfo, deleteUserInfo, getRoleList } from '../../network';
 
 const { Item } = Form
 const { confirm } = Modal
 
 const Manage = () => {
 
-  const { user } = useSelector(state => state.userInfo)
+  // const { user } = useSelector(state => state.userInfo)
 
   const formRef = useRef()
 

@@ -72,7 +72,7 @@ const Album = () => {
     setUpdateAlbumInfo(null)
     setIsModalOpen(false);
     if (uploadInfo) {
-      const result = await delPictureByName(uploadInfo.name)
+      await delPictureByName(uploadInfo.name)
     }
   };
   //表单提交
@@ -98,7 +98,7 @@ const Album = () => {
         message.warning(result.message)
         formRef.current.resetFields()
         if (uploadInfo) {
-          const result = await delPictureByName(uploadInfo.name)
+          await delPictureByName(uploadInfo.name)
         }
       }
     } else {

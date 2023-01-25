@@ -31,7 +31,7 @@ const SongRoot = () => {
   // 歌曲列表总数
   const [songTotal, setSongTotal] = useState()
   // 歌曲列表每页数量
-  const [songPageSize, setSongPageSize] = useState(4)
+  const [songPageSize] = useState(4)
   // 关键字类型
   const [keywordType, setKeywordType] = useState('all')
   // 关键字
