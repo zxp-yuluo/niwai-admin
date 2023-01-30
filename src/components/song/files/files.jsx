@@ -25,15 +25,15 @@ const Files = (props) => {
   let name
   switch (type) {
     case 'image':
-      action = 'http://localhost:3000/upload/image'
+      action = 'http://139.196.78.237/api/upload/image'
       name = 'image'
       break;
     case 'audio':
-      action = 'http://localhost:3000/upload/audio'
+      action = 'http://139.196.78.237/api/upload/audio'
       name = 'audio'
       break;
     case 'lyrics':
-      action = 'http://localhost:3000/upload/lyrics'
+      action = 'http://139.196.78.237/api/upload/lyrics'
       name = 'lyrics'
       break;
   } 

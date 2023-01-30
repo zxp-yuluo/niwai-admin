@@ -122,7 +122,7 @@ const Picture = (props) => {
     <>
       <ImgCrop>
         <Upload
-          action="http://localhost:3000/upload/image"
+          action="http://139.196.78.237/api/upload/image"
           method='POST'
           name="image"
           listType="picture-card"

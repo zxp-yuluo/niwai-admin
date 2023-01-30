@@ -29,7 +29,7 @@ instance.interceptors.response.use(
     return response.data;
   }, error => {
     Nprogress.done()
-    const statusCode = error.response.status
+    const statusCode = error.response?error.response.status: ''
     // token过期
     if(statusCode === 401) {
       message.error('身份验证失败，请重新登录！')

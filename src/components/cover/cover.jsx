@@ -76,7 +76,7 @@ const Cover = (props) => {
     <>
       <ImgCrop rotate>
         <Upload
-          action="http://localhost:3000/upload/image"
+          action="http://139.196.78.237/api/upload/image"
           method='POST'
           name='image'
           maxCount={1}
