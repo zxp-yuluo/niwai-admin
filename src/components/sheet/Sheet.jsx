@@ -139,10 +139,10 @@ const Sheet = () => {
                 }
               });
             }}>删除</Button>
-          <Button
+          {/* <Button
             size="small"
             type="primary"
-            onClick={() => updateSheetClick(_, record)}>修改</Button>
+            onClick={() => updateSheetClick(_, record)}>修改</Button> */}
         </Space>
       ),
     }
@@ -205,17 +205,17 @@ const Sheet = () => {
   // form表单 结束
 
   // 点击修改
-  const updateSheetClick = async (_, record) => {
-    const pictureName = record.cover.split('/').reverse()[0]
-    setOpen(true)
-    setOperation(false)
-    setUpdateId(_)
-    setUpdateInfo({...record,pictureName})
-    formRef.current.setFieldsValue({
-      name: record.name,
-      describe: record.describe
-    })
-  }
+  // const updateSheetClick = async (_, record) => {
+  //   const pictureName = record.cover.split('/').reverse()[0]
+  //   setOpen(true)
+  //   setOperation(false)
+  //   setUpdateId(_)
+  //   setUpdateInfo({...record,pictureName})
+  //   formRef.current.setFieldsValue({
+  //     name: record.name,
+  //     describe: record.describe
+  //   })
+  // }
   // 删除歌单
   const delSheetClick = async sheet => {
     const { id,cover} = sheet

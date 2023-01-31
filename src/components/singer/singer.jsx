@@ -37,7 +37,7 @@ const Singer = () => {
       key: 'id',
       render: (id, all) =>
       (<Space>
-        <Button size='small' type='primary' onClick={() => { updateSingerClick(id, all) }}>修改</Button>
+        {/* <Button size='small' type='primary' onClick={() => { updateSingerClick(id, all) }}>修改</Button> */}
         <Button size='small' type='primary' onClick={() => { deleteSingerClick(id, all) }} danger>删除</Button>
       </Space>)
     }
@@ -107,7 +107,9 @@ const Singer = () => {
       const result = await updateSinger(updateSingerInfo.id, { ...values, avatar: uploadInfo.url })
       if (result.status === 1) {
         message.success(result.message)
-        await delPictureByName(updateSingerInfo.name)
+        if(uploadInfo.name !== updateSingerInfo.name) {
+          await delPictureByName(updateSingerInfo.name)
+        }
         const res = await getSingerList(pageNum, pageSize)
         if (res.status === 0) {
           message.warning(res.message)
@@ -121,7 +123,7 @@ const Singer = () => {
       } else {
         message.warning(result.message)
         formRef.current.resetFields()
-        if (uploadInfo) {
+        if (uploadInfo.name !== updateSingerInfo.name) {
           await delPictureByName(uploadInfo.name)
         }
       }
@@ -137,22 +139,22 @@ const Singer = () => {
     setUploadInfo(info)
   }
   // 点击修改歌手
-  const updateSingerClick = (id, all) => {
-    if (user.role_id !== '1') {
-      if (all.create_author !== user.username) {
-        message.info('你没有权限操作！')
-        return
-      }
-    }
-    formRef.current.setFieldsValue({
-      singer: all.singer
-    })
-    const name = all.avatar.split('/').reverse()[0]
-    setUpdateSingerInfo({ uid: '-1', name, url: all.avatar, id })
-    setUploadInfo({ name, url: all.cover })
-    setIsModalOpen(true)
-    setOperation(false)
-  }
+  // const updateSingerClick = (id, all) => {
+  //   if (user.role_id !== '1') {
+  //     if (all.create_author !== user.username) {
+  //       message.info('你没有权限操作！')
+  //       return
+  //     }
+  //   }
+  //   formRef.current.setFieldsValue({
+  //     singer: all.singer
+  //   })
+  //   const name = all.avatar.split('/').reverse()[0]
+  //   setUpdateSingerInfo({ uid: '-1', name, url: all.avatar, id })
+  //   setUploadInfo({ name, url: all.cover })
+  //   setIsModalOpen(true)
+  //   setOperation(false)
+  // }
   // 点击删除歌手
   const deleteSingerClick = (id, all) => {
     if (user.role_id !== '1') {

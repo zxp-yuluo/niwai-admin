@@ -36,7 +36,7 @@ const Album = () => {
       key: 'id',
       render: (id, all) =>
       (<Space>
-        <Button size='small' type='primary' onClick={() => { updateAlbumClick(id, all) }}>修改</Button>
+        {/* <Button size='small' type='primary' onClick={() => { updateAlbumClick(id, all) }}>修改</Button> */}
         <Button size='small' type='primary' onClick={() => { deleteAlbumClick(id, all) }} danger>删除</Button>
       </Space>)
     }
@@ -79,6 +79,7 @@ const Album = () => {
   const onFinish = async (values) => {
     if (!uploadInfo) {
       message.warning('请上传图片！')
+      return 
     }
     if (operation) {
       // 添加
@@ -106,7 +107,10 @@ const Album = () => {
       const result = await updateAlbum(updateAlbumInfo.id, { ...values, cover: uploadInfo.url })
       if (result.status === 1) {
         message.success(result.message)
-        await delPictureByName(updateAlbumInfo.name)
+        if(uploadInfo.name !== updateAlbumInfo.name) {
+          // 没有上传图片
+          await delPictureByName(updateAlbumInfo.name)
+        }
         const res = await getAlbumList(pageNum, pageSize)
         if (res.status === 0) {
           message.warning(res.message)
@@ -120,7 +124,7 @@ const Album = () => {
       } else {
         message.warning(result.message)
         formRef.current.resetFields()
-        if (uploadInfo) {
+        if (uploadInfo.name !== updateAlbumInfo.name) {
           await delPictureByName(uploadInfo.name)
         }
       }
@@ -136,22 +140,22 @@ const Album = () => {
     setUploadInfo(info)
   }
   // 点击修改专辑
-  const updateAlbumClick = (id, all) => {
-    if (user.role_id !== '1') {
-      if (all.create_author !== user.username) {
-        message.info('你没有权限操作！')
-        return
-      }
-    }
-    formRef.current.setFieldsValue({
-      album: all.album
-    })
-    const name = all.cover.split('/').reverse()[0]
-    setUpdateAlbumInfo({ uid: '-1', name, url: all.cover, id })
-    setUploadInfo({ name, url: all.cover })
-    setIsModalOpen(true)
-    setOperation(false)
-  }
+  // const updateAlbumClick = (id, all) => {
+  //   if (user.role_id !== '1') {
+  //     if (all.create_author !== user.username) {
+  //       message.info('你没有权限操作！')
+  //       return
+  //     }
+  //   }
+  //   formRef.current.setFieldsValue({
+  //     album: all.album
+  //   })
+  //   const name = all.cover.split('/').reverse()[0]
+  //   setUpdateAlbumInfo({ uid: '-1', name, url: all.cover, id })
+  //   setUploadInfo({ name, url: all.cover })
+  //   setIsModalOpen(true)
+  //   setOperation(false)
+  // }
   // 点击删除专辑
   const deleteAlbumClick = (id, all) => {
     if (user.role_id !== '1') {

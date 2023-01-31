@@ -80,7 +80,7 @@ const SongRoot = () => {
       render: (_, all) => (
         <>
           <Space>
-            <Button size='small' type='primary' onClick={() => modifySongClick(_, all)}>修改</Button>
+            {/* <Button size='small' type='primary' onClick={() => modifySongClick(_, all)}>修改</Button> */}
             <Button size='small' danger onClick={() => deleteSongClick(_, all)} >删除</Button>
           </Space>
         </>
@@ -124,14 +124,14 @@ const SongRoot = () => {
     })
   }
   // 点击修改
-  const modifySongClick = (_, all) => {
-    navigate('/admin/song/modify_song/' + all.id, {
-      state: {
-        pathname: location.pathname,
-        songInfo: all
-      }
-    })
-  }
+  // const modifySongClick = (_, all) => {
+  //   navigate('/admin/song/modify_song/' + all.id, {
+  //     state: {
+  //       pathname: location.pathname,
+  //       songInfo: all
+  //     }
+  //   })
+  // }
 
   // 点击删除歌曲
   const deleteSongClick = (_,all) => {
