@@ -61,7 +61,7 @@ const Picture = (props) => {
         //   name: updateInfo.pictureName,
         //   url: updateInfo.cover
         // }
-        if(originalInfo.name !== currentInfo.name) {
+        if (originalInfo.name !== currentInfo.name) {
           //如果原始的信息和上传前显示的信息相同，说明是第一次上传，不相同把上传前显示的图片删除
           await delPictureByName(currentInfo.name)
         }
@@ -70,7 +70,7 @@ const Picture = (props) => {
           name: file.response.data.name,
           url: file.response.data.url
         }
-        props.getUpdataPictureInfo({ currentInfo, updataInfo,originalInfo })
+        props.getUpdataPictureInfo({ currentInfo, updataInfo, originalInfo })
         setCurrentInfo(updataInfo)
       }
     }
@@ -94,15 +94,15 @@ const Picture = (props) => {
         status: 'done',
         url: updateInfo.cover
       }]
-      // console.log(updateInfo);
       setCurrentInfo({
         name: updateInfo.pictureName,
         url: updateInfo.cover,
       })
+      props.getUpdataPictureInfo({ currentInfo:null, updataInfo:{name: updateInfo.pictureName,
+        url: updateInfo.cover,}, originalInfo:null })
     } else {
       temp = []
     }
-
     setFileList(temp)
   }, [updateInfo])
 
@@ -123,6 +123,7 @@ const Picture = (props) => {
       <ImgCrop>
         <Upload
           action="http://139.196.78.237/api/upload/image"
+          // action="http://localhost:3000/upload/image"
           method='POST'
           name="image"
           listType="picture-card"

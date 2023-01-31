@@ -148,6 +148,7 @@ const Album = () => {
     })
     const name = all.cover.split('/').reverse()[0]
     setUpdateAlbumInfo({ uid: '-1', name, url: all.cover, id })
+    setUploadInfo({ name, url: all.cover })
     setIsModalOpen(true)
     setOperation(false)
   }

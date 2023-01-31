@@ -173,12 +173,20 @@ const Sheet = () => {
     // 创建歌单
     let result
     if (operation) {
+      if(!pictureInfo) {
+        message.warning('请上传图片！')
+        return
+      }
       result = await establishUserSheet({ ...values, create_author, cover: pictureInfo?pictureInfo.url:'' })
     } else {
       // 修改歌单
       result = await updateUserSheet(updateId, {...values,cover: updatePictureInfo?updatePictureInfo.updataInfo.url:''}, )
-      await delPictureByName(updatePictureInfo.currentInfo.name)
-      await delPictureByName(updatePictureInfo.originalInfo.name)
+      if(updatePictureInfo.currentInfo) {
+        await delPictureByName(updatePictureInfo.currentInfo.name)
+      }
+      if(updatePictureInfo.originalInfo) {
+        await delPictureByName(updatePictureInfo.originalInfo.name)
+      }
       setUpdatePictureInfo(null)
     }
     if (result.status === 1) {
@@ -198,7 +206,7 @@ const Sheet = () => {
 
   // 点击修改
   const updateSheetClick = async (_, record) => {
-    const pictureName = 'niwaiyinyue' + record.cover.split('niwaiyinyue').reverse()[0]
+    const pictureName = record.cover.split('/').reverse()[0]
     setOpen(true)
     setOperation(false)
     setUpdateId(_)

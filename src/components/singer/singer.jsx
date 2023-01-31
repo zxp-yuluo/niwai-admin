@@ -149,6 +149,7 @@ const Singer = () => {
     })
     const name = all.avatar.split('/').reverse()[0]
     setUpdateSingerInfo({ uid: '-1', name, url: all.avatar, id })
+    setUploadInfo({ name, url: all.cover })
     setIsModalOpen(true)
     setOperation(false)
   }
@@ -174,12 +175,12 @@ const Singer = () => {
           if (res.status === 1) {
             if (res.data.list.length === 0 && pageNum !== 1) {
               setPageNum(pre => pre - 1)
-              const cRes = await getSingerList(pageNum-1, pageSize)
+              const cRes = await getSingerList(pageNum - 1, pageSize)
               if (cRes.status === 1) {
                 setSingerList(cRes.data.list)
                 setTotal(cRes.data.total)
               }
-            }else {
+            } else {
               setSingerList(res.data.list)
               setTotal(res.data.total)
             }
@@ -191,7 +192,7 @@ const Singer = () => {
         }
       },
       onCancel: () => {
-        
+
       }
     })
   }

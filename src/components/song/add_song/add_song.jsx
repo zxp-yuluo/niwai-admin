@@ -79,10 +79,10 @@ const AddSong = () => {
           await delPictureByName(imageRef.current.name)
         }
         if (originalLyricsRef.current && lyricsRef.current && originalLyricsRef.current.name !== lyricsRef.current.name) {
-          await delPictureByName(lyricsRef.current.name)
+          await delLyricsByName(lyricsRef.current.name)
         }
         if (originalUrlRef.current && urlRef.current && originalUrlRef.current.name !== urlRef.current.name) {
-          await delPictureByName(urlRef.current.name)
+          await delAudioByName(urlRef.current.name)
         }
       } else {
         // 添加
@@ -97,7 +97,7 @@ const AddSong = () => {
         }
       }
     }
-  }, [])
+  }, [originalImageRef, originalLyricsRef, originalUrlRef])
 
   // 点击返回
   const goBackClick = () => {
@@ -112,14 +112,20 @@ const AddSong = () => {
       const result = await updateSongById(id, { ...value, url: url.url, lyrics: tempLyrics, image: tempImage })
       if (result.status === 1) {
         setFlag(true)
-        if (originalImage.name !== image.name) {
-          await delPictureByName(originalImage.name)
+        if(image) {
+          if (originalImage.name && originalImage.name !== image.name) {
+            await delPictureByName(originalImage.name)
+          }
         }
-        if (originalLyrics.name !== lyrics.name) {
-          await delLyricsByName(originalLyrics.name)
+        if(lyrics) {
+          if (originalLyrics.name && originalLyrics.name !== lyrics.name) {
+            await delLyricsByName(originalLyrics.name)
+          }
         }
-        if (originalUrl.name !== url.name) {
-          await delAudioByName(originalUrl.name)
+        if(url) {
+          if (originalUrl.name && originalUrl.name !== url.name) {
+            await delAudioByName(originalUrl.name)
+          }
         }
         message.success(result.message)
         formRef.current.resetFields()
