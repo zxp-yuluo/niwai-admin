@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Select, Input, Table, Image, Space, message, Modal } from 'antd';
+import { Button, Card, Select, Input, Table, Image, Space, message, Modal, Radio } from 'antd';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { getUserSongBySearch, delSongById, delAudioByName, delPictureByName, delLyricsByName } from '../../../network';
+import {
+  getUserSongBySearch,
+  delSongById,
+  delAudioByName,
+  delPictureByName,
+  delLyricsByName,
+  getUserSheetByUsername,
+  sheetAddSongById
+} from '../../../network';
 import nw from './song_root.module.css';
 const { confirm } = Modal;
 
@@ -36,6 +44,15 @@ const SongRoot = () => {
   const [keywordType, setKeywordType] = useState('all')
   // 关键字
   const [keyword, setKeyword] = useState()
+  // Modal 控制
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // 单选    // 要添加的歌单id
+  const [value, setValue] = useState(-1);
+  // 歌单列表
+  const [sheetList, setSheetList] = useState([]);
+  // 要添加到歌单的歌曲信息
+  const [songInfo, setSongInfo] = useState(null);
+ 
   useEffect(() => {
     getSongList({ keywordType, keyword, create_author: user.username, pageNum: songPages, pageSize: songPageSize },
       setSongList,
@@ -82,6 +99,7 @@ const SongRoot = () => {
           <Space>
             {/* <Button size='small' type='primary' onClick={() => modifySongClick(_, all)}>修改</Button> */}
             <Button size='small' danger onClick={() => deleteSongClick(_, all)} >删除</Button>
+            <Button size='small' type='primary' onClick={() => addSheetClick(_, all)} >添加</Button>
           </Space>
         </>
       )
@@ -93,8 +111,8 @@ const SongRoot = () => {
   }
   // 点击搜索按钮
   const keywordSearchSong = async () => {
-    if(keywordType !== 'all') {
-      if(!keyword) {
+    if (keywordType !== 'all') {
+      if (!keyword) {
         message.warning('关键字不能为空！')
         return
       }
@@ -134,7 +152,7 @@ const SongRoot = () => {
   // }
 
   // 点击删除歌曲
-  const deleteSongClick = (_,all) => {
+  const deleteSongClick = (_, all) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
       cancelText: '取消',
@@ -144,7 +162,7 @@ const SongRoot = () => {
         const result = await delSongById(_)
         const audio = all.url.split('/').reverse()[0]
         const picture = all.image.split('/').reverse()[0]
-        const lyrics = all.lyrics.split('/').reverse()[0] 
+        const lyrics = all.lyrics.split('/').reverse()[0]
         if (result.status === 1) {
           message.success(result.message)
           getSongList({ keywordType, keyword, create_author: user.username, pageNum: songPages, pageSize: songPageSize },
@@ -152,10 +170,10 @@ const SongRoot = () => {
             setSongPages,
             setSongTotal
           )
-          if(picture) {
+          if (picture) {
             await delPictureByName(picture)
           }
-          if(lyrics) {
+          if (lyrics) {
             await delPictureByName(picture)
             await delLyricsByName(lyrics)
           }
@@ -165,11 +183,46 @@ const SongRoot = () => {
         }
       },
       onCancel() {
-        
+
       }
     })
 
   }
+  // 点击添加按钮  
+  const addSheetClick = async (_, all) => {
+    setSongInfo(all)
+    showModal()
+    // 获取歌单列表
+    // console.log(user.username);
+    setValue(-1)
+    const result = await getUserSheetByUsername(user.username)
+    console.log(result);
+    if(result.status === 1) {
+      setSheetList(result.data)
+    }
+  }
+  // 显示Modal 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  // 点击确定
+  const handleOk = async () => {
+    setIsModalOpen(false);
+    // 添加歌曲   sheetAddSongById
+    const id = value
+    if(id === -1) return
+    const result = await sheetAddSongById(id,songInfo)
+    console.log(result);
+  };
+  // 点击取消 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  // 单选选择
+  const onChange = (e) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
   return (
     <div className={nw.song}>
       <Card
@@ -218,6 +271,23 @@ const SongRoot = () => {
           }
         />;
       </Card>
+      <Modal
+        title="选择歌单"
+        open={isModalOpen}
+        onOk={handleOk}
+        cancelText="取消"
+        okText="确定"
+        onCancel={handleCancel}
+      >
+        
+        <Radio.Group onChange={onChange} value={value}>
+          {
+            sheetList.map(item => {
+              return (<div key={item.id}><Radio value={item.id}>{item.name}</Radio></div>)
+            })
+          }
+        </Radio.Group>
+      </Modal>
     </div>
   )
 }

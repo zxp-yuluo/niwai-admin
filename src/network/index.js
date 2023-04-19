@@ -15,6 +15,9 @@ export const updateUserSheet = (id, data) => niwai.put('/sheets/' + id, data);
 // 根据id删除歌单
 export const delUserSheet = id => niwai.delete('/sheets/' + id);
 
+// 根据歌单id添加歌曲
+export const sheetAddSongById = (id,data) => niwai.put('/sheets/song/' + id,data);
+
 // 根据名字删除图片
 export const delPictureByName = name => niwai.delete('/upload/picture/' + name);
 

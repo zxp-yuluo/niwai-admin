@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <div className={nw.login}>
       <div className={nw.content}>
-        <h1 className={nw.title}>用户登录</h1>
+        <h1 className={nw.title}>登录</h1>
         <Form
           name="normal_login"
           initialValues={{
@@ -97,6 +97,7 @@ const Login = () => {
             </Button>
           </Item>
         </Form>
+        <h6 className={nw.tip}>react 练习</h6>
       </div>
     </div>
   );

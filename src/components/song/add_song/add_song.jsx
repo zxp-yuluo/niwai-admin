@@ -256,6 +256,7 @@ const AddSong = () => {
             label="歌词格式"
           >
             <Image width={100} src="http://139.196.78.237/api/image/example.png"></Image>
+            {/* <Image width={100} src="http://zhuxinpeng.cn/api/image/example.png"></Image> */}
           </Item>}
           <Item>
             <Button type="primary" htmlType="submit">提交</Button>
