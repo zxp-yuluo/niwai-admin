@@ -33,10 +33,14 @@ const Login = () => {
       message.warning(result.message)
     }
   };
+  const toGithub = () => {
+    window.location.href="https://github.com/zxp-yuluo/niwai-music-admin"
+  }
   return (
     <div className={nw.login}>
       <div className={nw.content}>
-        <h1 className={nw.title}>登录</h1>
+        <h1 className={nw.title}>react 练习小项目</h1>
+        <div onClick={toGithub} className={nw.github}><span>github</span></div>
         <Form
           name="normal_login"
           initialValues={{
